@@ -1,4 +1,4 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name    Feedeen Full Feed
 // @description  Feedeenでアイテム記事の全文を表示します。
 // @id         FeedeenFullFeed
@@ -13,6 +13,10 @@
 // @grant    GM_setClipboard
 // @grant    GM_xmlhttpRequest
 // @version    0.21
+
+// @require http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
+// @require http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js
+
 // ==/UserScript==
 
 // Based on "Feedly Full Feed"    : http://userscripts.org/scripts/show/171868
@@ -923,20 +927,50 @@ FullFeed.createSettings = function() {
   var div1 = document.querySelector('[tabindex]');  // Feedeen
   if (div1) {
     window.setTimeout(function() {
-
       if (div1) {
         var div2 = document.createElement('div');
-		div2.id = 'gm_fullfeed_settings-menu';
-		div2.className = div1.childNodes[0].getAttribute('class');
-		div2.setAttribute('id','gm_fullfeed_settings-menu');
-		div2.setAttribute('role','button');
-		div2.setAttribute('style','-moz-user-select: none;');
-		div2.innerHTML = 'FullFeed' + loc[21];
-		div1.appendChild(div2);
+    		div2.id = 'gm_fullfeed_settings-menu';
+    		div2.className = div1.childNodes[0].getAttribute('class');
+    		div2.setAttribute('id','gm_fullfeed_settings-menu');
+    		div2.setAttribute('role','button');
+    		div2.setAttribute('style','-moz-user-select: none;');
+    		div2.innerHTML = 'FullFeed' + loc[21];
+    		div1.appendChild(div2);
+        // shrink 
+        // shrink button
+    		var div3 = document.createElement('div');
+    		div3.id = 'Shrink-button';
+    		div3.className = div1.childNodes[0].getAttribute('class');
+    		div3.setAttribute('role','button');
+    		div3.setAttribute('style','-moz-user-select: none;');
+    		div3.setAttribute('style','z-index: 0x7FFFFFFF;');
+    		div3.innerHTML = '!!Shrink!!';
+    		div1.appendChild(div3);
+        // jQuery Lib
+        (function(d, func) {
+          var check = function() {
+            if (typeof unsafeWindow.jQuery == 'undefined') return false;
+            func(unsafeWindow.jQuery); return true;
+          }
+          if (check()) return;
+          var s = d.createElement('script');
+          s.type = 'text/javascript';
+          s.src = 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js';
+          d.getElementsByTagName('head')[0].appendChild(s);
+          (function() {
+            if (check()) return;
+              setTimeout(arguments.callee, 1000); //change100 to 1000 :adjust to avoiding in script Collision
+          })();
+        })(document, function($) {
+          // Shrink object
+          $('#Shrink-button').click(function(){
+            $($("span[style$='display: none;']")).closest("div").html("");
+          });
+        });
+        // shrink end
       }
-    }, 10000);
+    }, 3000); // modified 10000 to 3000
   }
-
 
   $ids('general_key').addEventListener('keypress', function(e1) {
     e1.preventDefault();
@@ -1785,6 +1819,11 @@ initInterval = window.setInterval(function() {
     var blList = $ids('autoload_blacklist_list');
     if (e.target.id === 'gm_fullfeed_settings-menu') {
       FullFeed.viewSettings();
+      
+      
+      //
+      
+      
     } else if (e.target.id === 'gm_fullfeed_settings-menu2' || e.target.id === 'gm_fullfeed_settings-menu2child') {
       $id('settings-button').blur();
       FullFeed.viewSettings();
