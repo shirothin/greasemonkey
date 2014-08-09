@@ -12,7 +12,7 @@
 // @grant    GM_registerMenuCommand
 // @grant    GM_setClipboard
 // @grant    GM_xmlhttpRequest
-// @version    0.21
+// @version    0.23
 
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 // @require http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js
@@ -937,6 +937,7 @@ FullFeed.createSettings = function() {
     		div2.innerHTML = 'FullFeed' + loc[21];
     		div1.appendChild(div2);
         // shrink 
+        $('div.ac-xb').css('background-color', '#D3E6BC');	// for check  
         // shrink button
     		var div3 = document.createElement('div');
     		div3.id = 'Shrink-button';
@@ -961,10 +962,17 @@ FullFeed.createSettings = function() {
             if (check()) return;
               setTimeout(arguments.callee, 1000); //change100 to 1000 :adjust to avoiding in script Collision
           })();
-        })(document, function($) {
-          // Shrink object
+          // Version 0.23 Shrink object 
+          $('div.ac-xb').css('background-color', '#BCE6D3');	// for check  
           $('#Shrink-button').click(function(){
             $($("span[style$='display: none;']")).closest("div").html("");
+            $('div.ac-xb').css('background-color', 'pink');	// for check 
+          });
+        })(document, function($) {
+          // Shrink object Version 0.22 Version 0.23 ここの部分を移動
+          $('#Shrink-button').click(function(){
+            $($("span[style$='display: none;']")).closest("div").html("");
+            $('div.ac-xb').css('background-color', '#BCD3E6');	// for check 
           });
         });
         // shrink end
