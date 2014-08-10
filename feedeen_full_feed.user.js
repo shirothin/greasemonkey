@@ -6,13 +6,14 @@
 // @namespace  http://userscripts.org/scripts/show/172673
 // @updateURL  http://userscripts.org/scripts/show/172673.meta.js
 // @include    http://feedeen.com/d
+// @include    https://www.feedeen.com/d
 // @grant    GM_addStyle
 // @grant    GM_log
 // @grant    GM_openInTab
 // @grant    GM_registerMenuCommand
 // @grant    GM_setClipboard
 // @grant    GM_xmlhttpRequest
-// @version    0.23
+// @version    0.24
 
 // @require http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js
 // @require http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js
@@ -945,7 +946,7 @@ FullFeed.createSettings = function() {
     		div3.setAttribute('role','button');
     		div3.setAttribute('style','-moz-user-select: none;');
     		div3.setAttribute('style','z-index: 0x7FFFFFFF;');
-    		div3.innerHTML = '!!Shrink!!';
+    		div3.innerHTML = '&nbsp;&laquo;Shrink(L)&raquo;&nbsp;';
     		div1.appendChild(div3);
         // jQuery Lib
         (function(d, func) {
@@ -965,15 +966,28 @@ FullFeed.createSettings = function() {
           // Version 0.23 Shrink object 
           $('div.ac-xb').css('background-color', '#BCE6D3');	// for check  
           $('#Shrink-button').click(function(){
-            $($("span[style$='display: none;']")).closest("div").html("");
-            $('div.ac-xb').css('background-color', 'pink');	// for check 
+            DoShrink();  
           });
+          //
+          $(function(){
+            $(document).keydown(function(e){
+                   if(e.keyCode == 76){ 
+                   	DoShrink();	     
+                   }
+               });
+           })
+          function DoShrink(){
+              $($("span[style$='display: none;']")).closest("div").html("");
+              $('div.ac-xb').css('background-color', 'pink');	// for check  
+          } 
+          
+          //
         })(document, function($) {
           // Shrink object Version 0.22 Version 0.23 ここの部分を移動
-          $('#Shrink-button').click(function(){
-            $($("span[style$='display: none;']")).closest("div").html("");
-            $('div.ac-xb').css('background-color', '#BCD3E6');	// for check 
-          });
+          //$('#Shrink-button').click(function(){
+          //  $($("span[style$='display: none;']")).closest("div").html("");
+          //  $('div.ac-xb').css('background-color', '#BCD3E6');	// for check 
+          //});
         });
         // shrink end
       }
