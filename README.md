@@ -1,3 +1,5 @@
+# 本家Feedeenが既読非表示に対応したので、開発を中止しました。
+
 # Greasemonkeyスクリプト
 
 Firefox用Greasemonkeyスクリプトを置いています。Chromeでも動くかもしれません。
